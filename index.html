@@ -573,16 +573,11 @@ footer {
 }
 
   
-/* ── Fix fotos grandes (sapatos, relógios, óculos) ── */
-.produto-img-wrap #img-sapato-001,
-.produto-img-wrap #img-orient,
-.produto-img-wrap #img-technos,
-.produto-img-wrap #img-linge,
-.produto-img-wrap #img-seculus,
-.produto-img-wrap #img-oculos-invite {
+/* ── Fix fotos grandes (sapatos, relógios) ── */
+#img-sapato-001, #img-orient, #img-technos, #img-linge, #img-seculus,
+#img-oculos-invite {
   object-fit: contain !important;
-  object-position: center center !important;
-  background: var(--navy-deep) !important;
+  background: var(--navy-deep);
 }
 </style>
 </head>
@@ -1507,7 +1502,7 @@ footer {
 
 
           <div class="produto-card reveal" data-delay="160">
-            <div class="produto-img-wrap" style="aspect-ratio:4/3;">
+            <div class="produto-img-wrap">
               <img id="img-sapato-001" src="calçados/sapato-preto.jpeg" alt="Sapato Social" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Novo</span>
             </div>
@@ -1586,7 +1581,7 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="80">
-            <div class="produto-img-wrap" style="aspect-ratio:4/3;">
+            <div class="produto-img-wrap">
               <img id="img-oculos-invite" src="oculos/oculos-invite.jpeg" alt="Óculos Invite" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Novo</span>
             </div>
@@ -1835,7 +1830,7 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="80">
-            <div class="produto-img-wrap" style="aspect-ratio:4/3;">
+            <div class="produto-img-wrap">
               <img id="img-orient" src="relogios/orient.jpeg" alt="Relógio Orient" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Novo</span>
             </div>
@@ -1866,7 +1861,7 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="160">
-            <div class="produto-img-wrap" style="aspect-ratio:4/3;">
+            <div class="produto-img-wrap">
               <img id="img-technos" src="relogios/technos.jpeg" alt="Relógio Technos" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
@@ -1892,7 +1887,7 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="240">
-            <div class="produto-img-wrap" style="aspect-ratio:4/3;">
+            <div class="produto-img-wrap">
               <img id="img-linge" src="relogios/linge.jpeg" alt="Relógio Lince" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
@@ -1914,7 +1909,7 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="320">
-            <div class="produto-img-wrap" style="aspect-ratio:4/3;">
+            <div class="produto-img-wrap">
               <img id="img-seculus" src="relogios/seculus.jpeg" alt="Relógio Seculus" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
