@@ -579,6 +579,112 @@ footer {
   object-fit: contain !important;
   background: var(--navy-deep);
 }
+
+/* ══════════════════════════════════════
+   MODAL LIGHTBOX
+══════════════════════════════════════ */
+#modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(6px);
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+#modal-overlay.open { display: flex; }
+
+#modal-box {
+  background: var(--navy-deep);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  max-width: 900px; width: 100%;
+  max-height: 92vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  position: relative;
+  animation: modalIn 0.28s ease;
+}
+@keyframes modalIn {
+  from { opacity:0; transform: scale(0.94) translateY(16px); }
+  to   { opacity:1; transform: scale(1) translateY(0); }
+}
+#modal-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white); font-size: 18px; z-index: 10;
+  transition: background 0.2s;
+}
+#modal-close:hover { background: rgba(255,255,255,0.18); }
+
+#modal-img-wrap {
+  position: relative;
+  background: var(--navy-mid);
+  min-height: 400px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+#modal-img {
+  width: 100%; height: 100%;
+  max-height: 520px;
+  object-fit: contain;
+  padding: 24px;
+  transition: opacity 0.2s;
+}
+
+#modal-info {
+  padding: 32px 28px;
+  display: flex; flex-direction: column; gap: 18px;
+  overflow-y: auto;
+}
+#modal-nome {
+  font-size: 1.35rem; font-weight: 600;
+  color: var(--white); line-height: 1.3;
+}
+#modal-cores-label {
+  font-size: 0.7rem; letter-spacing: 0.12em;
+  color: var(--gold); text-transform: uppercase;
+}
+#modal-cores {
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+#modal-cores .cor-thumb {
+  width: 56px; cursor: pointer;
+}
+#modal-comprar {
+  margin-top: auto;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 20px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  color: var(--gold);
+  font-size: 0.82rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.25s, color 0.25s;
+}
+#modal-comprar:hover {
+  background: var(--gold); color: var(--navy);
+}
+
+/* cursor pointer nas fotos dos cards */
+.produto-img-wrap { cursor: zoom-in; }
+
+@media (max-width: 640px) {
+  #modal-box {
+    grid-template-columns: 1fr;
+    max-height: 96vh;
+  }
+  #modal-img-wrap { min-height: 260px; }
+  #modal-img { max-height: 280px; }
+  #modal-info { padding: 20px 18px; }
+}
+
 </style>
 </head>
 <body>
@@ -669,7 +775,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-polo-001" src="camisa-gola-polo/polo-tecnologica-com-ziper-branca.jpeg" alt="Camisa Polo Classic" onerror="this.src='placeholder.jpeg'">
+              <img id="img-polo-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="camisa-gola-polo/polo-tecnologica-com-ziper-branca.jpeg" alt="Camisa Polo Classic" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Destaque</span>
             </div>
             <div class="produto-info">
@@ -704,7 +810,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="80">
             <div class="produto-img-wrap">
-              <img id="img-polo-002" src="camisa-gola-polo/polo-tecnologica-com-ziper-azul-claro.jpeg" alt="Polo Slim" onerror="this.src='placeholder.jpeg'">
+              <img id="img-polo-002" onclick="abrirModal(this)" style="cursor:zoom-in;" src="camisa-gola-polo/polo-tecnologica-com-ziper-azul-claro.jpeg" alt="Polo Slim" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Polo Slim Fit</p>
@@ -745,7 +851,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-media-001" src="camiseta-gola-media-premium/camisa-media-premium-branca.jpeg" alt="Camisa Gola Média" onerror="this.src='placeholder.jpeg'">
+              <img id="img-media-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="camiseta-gola-media-premium/camisa-media-premium-branca.jpeg" alt="Camisa Gola Média" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Camisa Gola Média Premium</p>
@@ -805,7 +911,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-italiano-001" src="camisa-colarinho-italiano/camisa-golarinho-italiano.jpeg" alt="Colarinho Italiano" onerror="this.src='placeholder.jpeg'">
+              <img id="img-italiano-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="camisa-colarinho-italiano/camisa-golarinho-italiano.jpeg" alt="Colarinho Italiano" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Premium</span>
             </div>
             <div class="produto-info">
@@ -847,7 +953,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-trad-001" src="camisa-gola-polo/polo-tecnologica-com-ziper-branca.jpeg" alt="Básica Tradicional" onerror="this.src='placeholder.jpeg'">
+              <img id="img-trad-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="camisa-gola-polo/polo-tecnologica-com-ziper-branca.jpeg" alt="Básica Tradicional" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Básica Gola Tradicional</p>
@@ -911,7 +1017,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-tshirtm-001" src="camiseta-gola-media-premium/camisa-media-premium-preta.jpeg" alt="T-shirt Masculina" onerror="this.src='placeholder.jpeg'">
+              <img id="img-tshirtm-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="camiseta-gola-media-premium/camisa-media-premium-preta.jpeg" alt="T-shirt Masculina" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">T-shirt Essential</p>
@@ -972,7 +1078,7 @@ footer {
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-alfa-001" src="calca-de-alfaiataria/calca-alfaiataria-preta.jpeg" alt="Calça Alfaiataria" onerror="this.src='placeholder.jpeg'">
+              <img id="img-alfa-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calca-de-alfaiataria/calca-alfaiataria-preta.jpeg" alt="Calça Alfaiataria" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Premium</span>
             </div>
             <div class="produto-info">
@@ -1012,7 +1118,7 @@ footer {
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-alfareg-001" src="calca-de-alfaiataria-com-regulagem/calca-alfaiataria-slim-preto.jpeg" alt="Alfaiataria Regulagem" onerror="this.src='placeholder.jpeg'">
+              <img id="img-alfareg-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calca-de-alfaiataria-com-regulagem/calca-alfaiataria-slim-preto.jpeg" alt="Alfaiataria Regulagem" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Alfaiataria Ajustável</p>
@@ -1047,7 +1153,7 @@ footer {
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-sarja-001" src="calca-sarja/calca-sarja-acetinada-preto.jpeg" alt="Calça Sarja" onerror="this.src='placeholder.jpeg'">
+              <img id="img-sarja-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calca-sarja/calca-sarja-acetinada-preto.jpeg" alt="Calça Sarja" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Sarja Slim</p>
@@ -1090,7 +1196,7 @@ footer {
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-chino-001" src="calca-chino/calca-cropped-chino-camurca.jpeg" alt="Calça Chino" onerror="this.src='placeholder.jpeg'">
+              <img id="img-chino-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calca-chino/calca-cropped-chino-camurca.jpeg" alt="Calça Chino" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Chino Premium</p>
@@ -1129,7 +1235,7 @@ footer {
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-brim-001" src="calca-bri-m-acetinado-slim/calca-skinny-preta.jpeg" alt="Brim Acetinado" onerror="this.src='placeholder.jpeg'">
+              <img id="img-brim-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calca-bri-m-acetinado-slim/calca-skinny-preta.jpeg" alt="Brim Acetinado" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Slim</span>
             </div>
             <div class="produto-info">
@@ -1169,7 +1275,7 @@ footer {
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-jeans-001" src="calca-jeans/calca-jeans-escura.jpeg" alt="Calça Jeans" onerror="this.src='placeholder.jpeg'">
+              <img id="img-jeans-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calca-jeans/calca-jeans-escura.jpeg" alt="Calça Jeans" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Jeans Slim Premium</p>
@@ -1227,7 +1333,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="160">
             <div class="produto-img-wrap">
-              <img id="img-berm-tec-001" src="bermudas/bermuda-preta.jpeg" alt="Bermuda Sarja" onerror="this.src='placeholder.jpeg'">
+              <img id="img-berm-tec-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="bermudas/bermuda-preta.jpeg" alt="Bermuda Sarja" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Bermuda Sarja</p>
@@ -1265,7 +1371,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="240">
             <div class="produto-img-wrap">
-              <img id="img-berm-alfa-001" src="bermudas/bermuda-alfaiataria-preta.jpeg" alt="Bermuda Alfaiataria" onerror="this.src='placeholder.jpeg'">
+              <img id="img-berm-alfa-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="bermudas/bermuda-alfaiataria-preta.jpeg" alt="Bermuda Alfaiataria" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Bermuda Alfaiataria</p>
@@ -1291,7 +1397,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="320">
             <div class="produto-img-wrap">
-              <img id="img-berm-tec-002" src="bermudas/bermuda-tecnologica-cinza.jpeg" alt="Bermuda Tecnológica" onerror="this.src='placeholder.jpeg'">
+              <img id="img-berm-tec-002" onclick="abrirModal(this)" style="cursor:zoom-in;" src="bermudas/bermuda-tecnologica-cinza.jpeg" alt="Bermuda Tecnológica" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Novo</span>
             </div>
             <div class="produto-info">
@@ -1367,7 +1473,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="160">
             <div class="produto-img-wrap" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;">
-              <img id="img-sapato-001" src="calçados/sapato-preto.jpeg" alt="Sapato Social" onerror="this.src='placeholder.jpeg'">
+              <img id="img-sapato-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calçados/sapato-preto.jpeg" alt="Sapato Social" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Novo</span>
             </div>
             <div class="produto-info">
@@ -1446,7 +1552,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="80">
             <div class="produto-img-wrap" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;">
-              <img id="img-oculos-invite" src="oculos/oculos-invite.jpeg" alt="Óculos Invite" onerror="this.src='placeholder.jpeg'">
+              <img id="img-oculos-invite" onclick="abrirModal(this)" style="cursor:zoom-in;" src="oculos/oculos-invite.jpeg" alt="Óculos Invite" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Novo</span>
             </div>
             <div class="produto-info">
@@ -1695,7 +1801,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="80">
             <div class="produto-img-wrap" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;">
-              <img id="img-orient" src="relogios/orient.jpeg" alt="Relógio Orient" onerror="this.src='placeholder.jpeg'">
+              <img id="img-orient" onclick="abrirModal(this)" style="cursor:zoom-in;" src="relogios/orient.jpeg" alt="Relógio Orient" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Novo</span>
             </div>
             <div class="produto-info">
@@ -1726,7 +1832,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="160">
             <div class="produto-img-wrap" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;">
-              <img id="img-technos" src="relogios/technos.jpeg" alt="Relógio Technos" onerror="this.src='placeholder.jpeg'">
+              <img id="img-technos" onclick="abrirModal(this)" style="cursor:zoom-in;" src="relogios/technos.jpeg" alt="Relógio Technos" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Relógio Technos</p>
@@ -1752,7 +1858,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="240">
             <div class="produto-img-wrap" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;">
-              <img id="img-linge" src="relogios/linge.jpeg" alt="Relógio Lince" onerror="this.src='placeholder.jpeg'">
+              <img id="img-linge" onclick="abrirModal(this)" style="cursor:zoom-in;" src="relogios/linge.jpeg" alt="Relógio Lince" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Relógio Lince</p>
@@ -1774,7 +1880,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="320">
             <div class="produto-img-wrap" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;">
-              <img id="img-seculus" src="relogios/seculus.jpeg" alt="Relógio Seculus" onerror="this.src='placeholder.jpeg'">
+              <img id="img-seculus" onclick="abrirModal(this)" style="cursor:zoom-in;" src="relogios/seculus.jpeg" alt="Relógio Seculus" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Relógio Seculus</p>
@@ -1838,7 +1944,7 @@ footer {
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-feminina-001" src="t-shirt-feminina-baby-look/camiseta-basica-feminina-branca.jpeg" alt="Camiseta Básica Feminina" onerror="this.src='placeholder.jpeg'">
+              <img id="img-feminina-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="t-shirt-feminina-baby-look/camiseta-basica-feminina-branca.jpeg" alt="Camiseta Básica Feminina" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Feminino</span>
             </div>
             <div class="produto-info">
@@ -1905,7 +2011,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="0">
             <div class="produto-img-wrap">
-              <img id="img-terno-001" src="costumes-terno/terno-poliviscose-stretch-preto.jpeg" alt="Terno" onerror="this.src='placeholder.jpeg'">
+              <img id="img-terno-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="costumes-terno/terno-poliviscose-stretch-preto.jpeg" alt="Terno" onerror="this.src='placeholder.jpeg'">
               <span class="produto-badge">Luxo</span>
             </div>
             <div class="produto-info">
@@ -1940,7 +2046,7 @@ footer {
 
           <div class="produto-card reveal" data-delay="80">
             <div class="produto-img-wrap">
-              <img id="img-terno-002" src="costumes-terno/terno-poliviscose-azul-marinho.jpeg" alt="Terno Completo" onerror="this.src='placeholder.jpeg'">
+              <img id="img-terno-002" onclick="abrirModal(this)" style="cursor:zoom-in;" src="costumes-terno/terno-poliviscose-azul-marinho.jpeg" alt="Terno Completo" onerror="this.src='placeholder.jpeg'">
             </div>
             <div class="produto-info">
               <p class="produto-nome">Terno Completo 3 Peças</p>
@@ -2224,6 +2330,98 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+  /* ══ MODAL LIGHTBOX ══════════════════════════════════════════ */
+  window.abrirModal = function(imgEl) {
+    const card = imgEl.closest('.produto-card');
+    if (!card) return;
+
+    const nome = card.querySelector('.produto-nome')?.textContent || '';
+    const comprarHref = card.querySelector('.btn-comprar')?.href || '#';
+    const thumbsEl = card.querySelectorAll('.cor-thumb');
+
+    // Pega a imagem atual do card
+    const srcAtual = imgEl.src;
+
+    // Popula modal
+    document.getElementById('modal-nome').textContent = nome;
+    document.getElementById('modal-img').src = srcAtual;
+    document.getElementById('modal-img').alt = nome;
+    document.getElementById('modal-comprar').href = comprarHref;
+
+    // Clona os thumbs para o modal
+    const modalCores = document.getElementById('modal-cores');
+    modalCores.innerHTML = '';
+    thumbsEl.forEach(thumb => {
+      const clone = thumb.cloneNode(true);
+      // Ao clicar no thumb do modal, troca a imagem do modal
+      clone.onclick = function() {
+        const src = thumb.getAttribute('onclick').match(/'([^']*\.jpeg)'/g);
+        if (src && src.length > 0) {
+          const url = src[src.length - 1].replace(/'/g, '');
+          const modalImg = document.getElementById('modal-img');
+          modalImg.style.opacity = '0';
+          setTimeout(() => {
+            modalImg.src = url;
+            modalImg.style.opacity = '1';
+          }, 150);
+        }
+        modalCores.querySelectorAll('.cor-thumb').forEach(t => t.classList.remove('ativa'));
+        clone.classList.add('ativa');
+      };
+      // Marca o thumb ativo baseado na imagem atual
+      const srcMatch = thumb.getAttribute('onclick')?.match(/'([^']*\.jpeg)'/g);
+      if (srcMatch) {
+        const url = srcMatch[srcMatch.length - 1].replace(/'/g, '');
+        if (srcAtual.endsWith(url) || srcAtual.includes(url)) {
+          clone.classList.add('ativa');
+        } else {
+          clone.classList.remove('ativa');
+        }
+      }
+      modalCores.appendChild(clone);
+    });
+
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.fecharModal = function(e) {
+    if (e.target === document.getElementById('modal-overlay')) {
+      fecharModalDireto();
+    }
+  };
+
+  window.fecharModalDireto = function() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  // Fechar com ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') fecharModalDireto();
+  });
+
 </script>
+
+<!-- ══ MODAL LIGHTBOX ══ -->
+<div id="modal-overlay" onclick="fecharModal(event)">
+  <div id="modal-box">
+    <button id="modal-close" onclick="fecharModalDireto()" title="Fechar">✕</button>
+    <div id="modal-img-wrap">
+      <img id="modal-img" src="" alt="">
+    </div>
+    <div id="modal-info">
+      <p id="modal-nome"></p>
+      <p id="modal-cores-label">Cores disponíveis</p>
+      <div id="modal-cores"></div>
+      <a id="modal-comprar" href="#" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        Comprar
+      </a>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
