@@ -2278,259 +2278,174 @@ footer {
 <!-- ═══ JAVASCRIPT ════════════════════════ -->
 <script>
 
-/* ══════════════════════════════════════════════
-   FUNÇÕES GLOBAIS — declaradas fora do DOMContentLoaded
-   para garantir que os onclicks inline funcionem
-   independente do timing de carregamento da página.
-══════════════════════════════════════════════ */
+/* ─── FUNÇÕES GLOBAIS ─────────────────────────────────────────── */
 
-/* ── Troca de cor (card) ─────────────── */
 function trocarCor(imgId, thumbEl, novaSrc) {
-  var imgPrincipal = document.getElementById(imgId);
-  if (!imgPrincipal) return;
-
+  var img = document.getElementById(imgId);
+  if (!img) return;
   var card = thumbEl.closest('.produto-card');
-  if (card) {
-    card.querySelectorAll('.cor-thumb').forEach(function(t) { t.classList.remove('ativa'); });
-  }
+  if (card) card.querySelectorAll('.cor-thumb').forEach(function(t){ t.classList.remove('ativa'); });
   thumbEl.classList.add('ativa');
-
-  imgPrincipal.style.opacity = '0';
-  setTimeout(function() {
-    imgPrincipal.src = novaSrc;
-    imgPrincipal.style.opacity = '1';
-  }, 180);
+  img.style.opacity = '0';
+  setTimeout(function(){ img.src = novaSrc; img.style.opacity = '1'; }, 150);
 }
 
-/* ── Troca de cor (modal) ─────────────── */
 function trocarModalCor(thumbEl, src) {
-  var modalImg = document.getElementById('modal-img');
-  if (!modalImg) return;
-
-  document.querySelectorAll('#modal-cores .cor-thumb').forEach(function(t) { t.classList.remove('ativa'); });
+  var img = document.getElementById('modal-img');
+  if (!img) return;
+  document.querySelectorAll('#modal-cores .cor-thumb').forEach(function(t){ t.classList.remove('ativa'); });
   thumbEl.classList.add('ativa');
-
-  modalImg.style.opacity = '0';
-  setTimeout(function() {
-    modalImg.src = src;
-    modalImg.style.opacity = '1';
-  }, 180);
+  img.style.opacity = '0';
+  setTimeout(function(){ img.src = src; img.style.opacity = '1'; }, 150);
 }
 
-/* ── Abrir Modal ─────────────────────── */
 function abrirModal(card) {
-  var nomeEl = card.querySelector('.produto-nome');
-  var nome = nomeEl ? nomeEl.textContent.trim() : '';
-
-  /* Pegar a imagem principal atualmente visível no card */
+  var nome = (card.querySelector('.produto-nome') || {}).textContent || '';
   var imgEl = card.querySelector('.produto-img-wrap img');
   var imgSrc = imgEl ? imgEl.src : '';
+  var buyEl = card.querySelector('.btn-comprar');
+  var buyHref = buyEl ? (buyEl.getAttribute('href') || '#') : '#';
 
-  /* Link do botão comprar */
-  var buyLink = card.querySelector('.btn-comprar');
-  var buyHref = buyLink ? buyLink.getAttribute('href') : '#';
-
-  /* Preencher modal */
   document.getElementById('modal-nome').textContent = nome;
-
   var modalImg = document.getElementById('modal-img');
   modalImg.src = imgSrc;
   modalImg.style.opacity = '1';
-
   document.getElementById('modal-comprar').setAttribute('href', buyHref);
 
-  /* Clonar os thumbs de cor do card para o modal */
   var modalCores = document.getElementById('modal-cores');
   var modalCoresLabel = document.getElementById('modal-cores-label');
   modalCores.innerHTML = '';
 
-  var cardThumbs = card.querySelectorAll('.cor-thumb');
-
-  if (cardThumbs.length > 0) {
+  var thumbs = card.querySelectorAll('.cor-thumb');
+  if (thumbs.length > 0) {
     modalCoresLabel.style.display = 'block';
     modalCores.style.display = 'flex';
-
-    cardThumbs.forEach(function(thumb) {
+    thumbs.forEach(function(thumb) {
       var clone = thumb.cloneNode(true);
-
-      /* Extrair o caminho da imagem do onclick original */
-      var originalOnclick = thumb.getAttribute('onclick') || '';
-
-      /* Suporta: trocarCor('imgId', this, 'caminho/img.jpeg') */
-      var match = originalOnclick.match(/trocarCor\(['"][^'"]+['"],\s*this,\s*['"]([^'"]+)['"]\)/);
-      var imgPath = match ? match[1] : '';
-
-      if (imgPath) {
-        clone.setAttribute('onclick', "trocarModalCor(this, '" + imgPath + "')");
+      var oc = thumb.getAttribute('onclick') || '';
+      var m = oc.match(/trocarCor\([\'"][^\']+[\'"],\s*this,\s*[\'"]([^\']+)[\'"]\)/);
+      var src = m ? m[1] : (thumb.querySelector('img') ? thumb.querySelector('img').getAttribute('src') : '');
+      if (src) {
+        clone.setAttribute('onclick', "trocarModalCor(this,'" + src + "')");
       } else {
-        /* Fallback: thumb sem trocarCor — clicar atualiza imagem do modal com src do thumb */
-        var thumbImg = thumb.querySelector('img');
-        if (thumbImg) {
-          var fallbackSrc = thumbImg.getAttribute('src') || '';
-          clone.setAttribute('onclick', "trocarModalCor(this, '" + fallbackSrc + "')");
-        } else {
-          clone.removeAttribute('onclick');
-        }
+        clone.removeAttribute('onclick');
       }
-
-      /* Preservar estado ativo: se este thumb corresponde à imagem atualmente exibida */
-      var thumbImg2 = thumb.querySelector('img');
-      if (thumbImg2) {
-        var thumbSrc = thumbImg2.getAttribute('src') || '';
-        /* Ativo se era o ativo original, ou se a imagem bate com a atual do card */
-        var isAtiva = thumb.classList.contains('ativa');
-        clone.classList.toggle('ativa', isAtiva);
-      }
-
+      clone.classList.toggle('ativa', thumb.classList.contains('ativa'));
       modalCores.appendChild(clone);
     });
-
-    /* Garantir que pelo menos um thumb aparece como ativo */
-    var ativos = modalCores.querySelectorAll('.cor-thumb.ativa');
-    if (ativos.length === 0) {
-      var primeiro = modalCores.querySelector('.cor-thumb');
-      if (primeiro) primeiro.classList.add('ativa');
+    if (!modalCores.querySelector('.cor-thumb.ativa')) {
+      var first = modalCores.querySelector('.cor-thumb');
+      if (first) first.classList.add('ativa');
     }
-
   } else {
     modalCoresLabel.style.display = 'none';
     modalCores.style.display = 'none';
   }
 
-  /* Abrir overlay */
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
-/* ── Fechar Modal ao clicar no overlay ── */
 function fecharModal(e) {
-  if (e.target === document.getElementById('modal-overlay')) {
-    fecharModalDireto();
-  }
+  if (e.target === document.getElementById('modal-overlay')) fecharModalDireto();
 }
 
-/* ── Fechar Modal direto ─────────────── */
 function fecharModalDireto() {
-  var overlay = document.getElementById('modal-overlay');
-  if (overlay) overlay.classList.remove('open');
+  var ov = document.getElementById('modal-overlay');
+  if (ov) ov.classList.remove('open');
   document.body.style.overflow = '';
 }
 
-/* ── Mobile menu ────────────────────── */
-var _menuOpen = false;
-
 function toggleMobile() {
-  _menuOpen = !_menuOpen;
-  var mobileMenu = document.getElementById('mobileMenu');
-  if (mobileMenu) mobileMenu.classList.toggle('open', _menuOpen);
-  document.body.style.overflow = _menuOpen ? 'hidden' : '';
+  var m = document.getElementById('mobileMenu');
+  if (!m) return;
+  var open = m.classList.toggle('open');
+  document.body.style.overflow = open ? 'hidden' : '';
 }
 
 function closeMobile() {
-  _menuOpen = false;
-  var mobileMenu = document.getElementById('mobileMenu');
-  if (mobileMenu) mobileMenu.classList.remove('open');
+  var m = document.getElementById('mobileMenu');
+  if (m) m.classList.remove('open');
   document.body.style.overflow = '';
 }
 
-/* ══════════════════════════════════════════════
-   INICIALIZAÇÃO — após DOM carregado
-══════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', function() {
+/* ─── INICIALIZAÇÃO ──────────────────────────────────────────── */
+(function() {
+  function init() {
 
-  /* ── Nav scroll ─────────────────────── */
-  var nav = document.getElementById('navbar');
-  if (nav) {
-    window.addEventListener('scroll', function() {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    });
-  }
-
-  /* ── Fechar modal com tecla Escape ─── */
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') fecharModalDireto();
-  });
-
-  /* ── Delegação de clique nos cards (event delegation) ── */
-  document.addEventListener('click', function(e) {
-    if (e.target.closest('.btn-comprar') || e.target.closest('.cor-thumb')) return;
-    var card = e.target.closest('[data-abre-modal="1"]');
-    if (card) {
-      e.preventDefault();
-      abrirModal(card);
+    /* Nav scroll */
+    var nav = document.getElementById('navbar');
+    if (nav) {
+      window.addEventListener('scroll', function() {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+      });
     }
-  });
 
-  /* ── Scroll reveal ──────────────────── */
-  var reveals = document.querySelectorAll('.reveal');
+    /* Escape fecha modal */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') fecharModalDireto();
+    });
 
-  if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) {
-          var delay = parseInt(e.target.dataset.delay || 0);
-          setTimeout(function() { e.target.classList.add('visible'); }, delay);
-          observer.unobserve(e.target);
+    /* ── CLIQUE NOS CARDS: evento direto em cada card ── */
+    document.querySelectorAll('.produto-card').forEach(function(card) {
+      function handleCardClick(e) {
+        /* Ignorar cliques no botão comprar e nos thumbs de cor */
+        if (e.target.closest('.btn-comprar')) return;
+        if (e.target.closest('.cor-thumb')) return;
+        e.stopPropagation();
+        abrirModal(card);
+      }
+      card.addEventListener('click', handleCardClick);
+      card.addEventListener('touchend', function(e) {
+        if (e.target.closest('.btn-comprar')) return;
+        if (e.target.closest('.cor-thumb')) return;
+        e.preventDefault();
+        abrirModal(card);
+      }, { passive: false });
+    });
+
+    /* Scroll reveal — força visible em todos após pequeno delay */
+    var reveals = document.querySelectorAll('.reveal');
+    reveals.forEach(function(el) { el.classList.add('visible'); });
+
+    /* Newsletter */
+    var btn = document.querySelector('.newsletter-btn');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        var input = document.querySelector('.newsletter-input');
+        if (input && input.value.indexOf('@') > -1) {
+          btn.textContent = '✓ Inscrito';
+          btn.style.background = '#2ecc71';
+          input.value = '';
+          setTimeout(function() { btn.textContent = 'Inscrever'; btn.style.background = 'var(--gold)'; }, 3200);
+        } else if (input) {
+          input.style.borderColor = '#e74c3c';
+          setTimeout(function() { input.style.borderColor = 'var(--glass-border)'; }, 2200);
         }
       });
-    }, { threshold: 0.01, rootMargin: '0px 0px 60px 0px' });
+    }
 
-    reveals.forEach(function(el, i) {
-      if (!el.dataset.delay) el.dataset.delay = (i % 4) * 60;
-      observer.observe(el);
+    /* Drag-to-scroll nas cores */
+    document.querySelectorAll('.cores-scroll').forEach(function(el) {
+      var isDown = false, startX, scrollLeft;
+      el.addEventListener('mousedown', function(e) { isDown = true; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft; });
+      el.addEventListener('mouseleave', function() { isDown = false; });
+      el.addEventListener('mouseup', function() { isDown = false; });
+      el.addEventListener('mousemove', function(e) {
+        if (!isDown) return;
+        e.preventDefault();
+        el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX) * 1.2;
+      });
     });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    /* Fallback: mostrar tudo imediatamente */
-    reveals.forEach(function(el) { el.classList.add('visible'); });
+    init();
   }
+})();
 
-  /* Garantia extra: após 1.5s, tornar visível qualquer reveal que ainda não animou */
-  setTimeout(function() {
-    document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
-      el.classList.add('visible');
-    });
-  }, 1500);
-
-  /* ── Newsletter ─────────────────────── */
-  var newsletterBtn = document.querySelector('.newsletter-btn');
-  if (newsletterBtn) {
-    newsletterBtn.addEventListener('click', function() {
-      var input = document.querySelector('.newsletter-input');
-      if (input && input.value.includes('@')) {
-        this.textContent = '✓ Inscrito';
-        this.style.background = '#2ecc71';
-        input.value = '';
-        var btn = this;
-        setTimeout(function() {
-          btn.textContent = 'Inscrever';
-          btn.style.background = 'var(--gold)';
-        }, 3200);
-      } else if (input) {
-        input.style.borderColor = '#e74c3c';
-        setTimeout(function() { input.style.borderColor = 'var(--glass-border)'; }, 2200);
-      }
-    });
-  }
-
-  /* ── Drag-to-scroll nas cores ───────── */
-  document.querySelectorAll('.cores-scroll').forEach(function(el) {
-    var isDown = false, startX, scrollLeft;
-    el.addEventListener('mousedown', function(e) {
-      isDown = true; el.classList.add('active');
-      startX = e.pageX - el.offsetLeft;
-      scrollLeft = el.scrollLeft;
-    });
-    el.addEventListener('mouseleave', function() { isDown = false; el.classList.remove('active'); });
-    el.addEventListener('mouseup', function() { isDown = false; el.classList.remove('active'); });
-    el.addEventListener('mousemove', function(e) {
-      if (!isDown) return;
-      e.preventDefault();
-      var x = e.pageX - el.offsetLeft;
-      el.scrollLeft = scrollLeft - (x - startX) * 1.2;
-    });
-  });
-
-});
 </script>
 
 </body>
