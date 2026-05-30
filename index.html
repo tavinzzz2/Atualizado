@@ -2275,185 +2275,232 @@ footer {
 
 <!-- ═══ JAVASCRIPT ════════════════════════ -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
 
-  /* ── Nav scroll ─────────────────────── */
-  const nav = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  });
+/* ══════════════════════════════════════════════
+   FUNÇÕES GLOBAIS — declaradas fora do DOMContentLoaded
+   para garantir que os onclicks inline funcionem
+   independente do timing de carregamento da página.
+══════════════════════════════════════════════ */
 
-  /* ── Mobile menu ────────────────────── */
-  let menuOpen = false;
-  const mobileMenu = document.getElementById('mobileMenu');
+/* ── Troca de cor (card) ─────────────── */
+function trocarCor(imgId, thumbEl, novaSrc) {
+  var imgPrincipal = document.getElementById(imgId);
+  if (!imgPrincipal) return;
 
-  window.toggleMobile = function () {
-    menuOpen = !menuOpen;
-    mobileMenu.classList.toggle('open', menuOpen);
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
-  };
+  var card = thumbEl.closest('.produto-card');
+  if (card) {
+    card.querySelectorAll('.cor-thumb').forEach(function(t) { t.classList.remove('ativa'); });
+  }
+  thumbEl.classList.add('ativa');
 
-  window.closeMobile = function () {
-    menuOpen = false;
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow = '';
-  };
+  imgPrincipal.style.opacity = '0';
+  setTimeout(function() {
+    imgPrincipal.src = novaSrc;
+    imgPrincipal.style.opacity = '1';
+  }, 180);
+}
 
-  /* ── Troca de cor (card) ─────────────── */
-  window.trocarCor = function (imgId, thumbEl, novaSrc) {
-    const imgPrincipal = document.getElementById(imgId);
-    if (!imgPrincipal) return;
+/* ── Troca de cor (modal) ─────────────── */
+function trocarModalCor(thumbEl, src) {
+  var modalImg = document.getElementById('modal-img');
+  if (!modalImg) return;
 
-    const card = thumbEl.closest('.produto-card');
-    if (card) {
-      card.querySelectorAll('.cor-thumb').forEach(t => t.classList.remove('ativa'));
-    }
-    thumbEl.classList.add('ativa');
+  document.querySelectorAll('#modal-cores .cor-thumb').forEach(function(t) { t.classList.remove('ativa'); });
+  thumbEl.classList.add('ativa');
 
-    imgPrincipal.style.opacity = '0';
-    setTimeout(() => {
-      imgPrincipal.src = novaSrc;
-      imgPrincipal.onload = () => { imgPrincipal.style.opacity = '1'; };
-      imgPrincipal.style.opacity = '1';
-    }, 180);
-  };
-
-  /* ── Troca de cor (modal) ─────────────── */
-  window.trocarModalCor = function (thumbEl, src) {
-    const modalImg = document.getElementById('modal-img');
-    if (!modalImg) return;
-
-    document.querySelectorAll('#modal-cores .cor-thumb').forEach(t => t.classList.remove('ativa'));
-    thumbEl.classList.add('ativa');
-
-    modalImg.style.opacity = '0';
-    setTimeout(() => {
-      modalImg.src = src;
-      modalImg.onload = () => { modalImg.style.opacity = '1'; };
-      modalImg.style.opacity = '1';
-    }, 180);
-  };
-
-  /* ── Abrir Modal ─────────────────────── */
-  window.abrirModal = function (card) {
-    const nome = card.querySelector('.produto-nome')?.textContent || '';
-    const imgEl = card.querySelector('.produto-img-wrap img');
-    const imgSrc = imgEl ? imgEl.src : '';
-    const buyLink = card.querySelector('.btn-comprar');
-    const buyHref = buyLink ? buyLink.href : '#';
-
-    document.getElementById('modal-nome').textContent = nome;
-
-    const modalImg = document.getElementById('modal-img');
-    modalImg.src = imgSrc;
+  modalImg.style.opacity = '0';
+  setTimeout(function() {
+    modalImg.src = src;
     modalImg.style.opacity = '1';
+  }, 180);
+}
 
-    document.getElementById('modal-comprar').href = buyHref;
+/* ── Abrir Modal ─────────────────────── */
+function abrirModal(card) {
+  var nomeEl = card.querySelector('.produto-nome');
+  var nome = nomeEl ? nomeEl.textContent.trim() : '';
 
-    /* Clonar os thumbs do card para o modal */
-    const modalCores = document.getElementById('modal-cores');
-    modalCores.innerHTML = '';
+  /* Pegar a imagem principal atualmente visível no card */
+  var imgEl = card.querySelector('.produto-img-wrap img');
+  var imgSrc = imgEl ? imgEl.src : '';
 
-    const cardThumbs = card.querySelectorAll('.cor-thumb');
-    if (cardThumbs.length > 0) {
-      document.getElementById('modal-cores-label').style.display = 'block';
-      modalCores.style.display = 'flex';
+  /* Link do botão comprar */
+  var buyLink = card.querySelector('.btn-comprar');
+  var buyHref = buyLink ? buyLink.getAttribute('href') : '#';
 
-      cardThumbs.forEach(thumb => {
-        const clone = thumb.cloneNode(true);
+  /* Preencher modal */
+  document.getElementById('modal-nome').textContent = nome;
 
-        /* Extrair src do onclick original e criar novo onclick para o modal */
-        const originalOnclick = thumb.getAttribute('onclick') || '';
-        const match = originalOnclick.match(/trocarCor\('[^']+',\s*this,\s*'([^']+)'\)/);
-        const imgPath = match ? match[1] : '';
+  var modalImg = document.getElementById('modal-img');
+  modalImg.src = imgSrc;
+  modalImg.style.opacity = '1';
 
-        if (imgPath) {
-          clone.setAttribute('onclick', "trocarModalCor(this, '" + imgPath + "')");
+  document.getElementById('modal-comprar').setAttribute('href', buyHref);
+
+  /* Clonar os thumbs de cor do card para o modal */
+  var modalCores = document.getElementById('modal-cores');
+  var modalCoresLabel = document.getElementById('modal-cores-label');
+  modalCores.innerHTML = '';
+
+  var cardThumbs = card.querySelectorAll('.cor-thumb');
+
+  if (cardThumbs.length > 0) {
+    modalCoresLabel.style.display = 'block';
+    modalCores.style.display = 'flex';
+
+    cardThumbs.forEach(function(thumb) {
+      var clone = thumb.cloneNode(true);
+
+      /* Extrair o caminho da imagem do onclick original */
+      var originalOnclick = thumb.getAttribute('onclick') || '';
+
+      /* Suporta: trocarCor('imgId', this, 'caminho/img.jpeg') */
+      var match = originalOnclick.match(/trocarCor\(['"][^'"]+['"],\s*this,\s*['"]([^'"]+)['"]\)/);
+      var imgPath = match ? match[1] : '';
+
+      if (imgPath) {
+        clone.setAttribute('onclick', "trocarModalCor(this, '" + imgPath + "')");
+      } else {
+        /* Fallback: thumb sem trocarCor — clicar atualiza imagem do modal com src do thumb */
+        var thumbImg = thumb.querySelector('img');
+        if (thumbImg) {
+          var fallbackSrc = thumbImg.getAttribute('src') || '';
+          clone.setAttribute('onclick', "trocarModalCor(this, '" + fallbackSrc + "')");
         } else {
           clone.removeAttribute('onclick');
         }
+      }
 
-        /* Preservar estado ativo */
-        clone.classList.toggle('ativa', thumb.classList.contains('ativa'));
+      /* Preservar estado ativo: se este thumb corresponde à imagem atualmente exibida */
+      var thumbImg2 = thumb.querySelector('img');
+      if (thumbImg2) {
+        var thumbSrc = thumbImg2.getAttribute('src') || '';
+        /* Ativo se era o ativo original, ou se a imagem bate com a atual do card */
+        var isAtiva = thumb.classList.contains('ativa');
+        clone.classList.toggle('ativa', isAtiva);
+      }
 
-        modalCores.appendChild(clone);
-      });
-    } else {
-      document.getElementById('modal-cores-label').style.display = 'none';
-      modalCores.style.display = 'none';
+      modalCores.appendChild(clone);
+    });
+
+    /* Garantir que pelo menos um thumb aparece como ativo */
+    var ativos = modalCores.querySelectorAll('.cor-thumb.ativa');
+    if (ativos.length === 0) {
+      var primeiro = modalCores.querySelector('.cor-thumb');
+      if (primeiro) primeiro.classList.add('ativa');
     }
 
-    document.getElementById('modal-overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
+  } else {
+    modalCoresLabel.style.display = 'none';
+    modalCores.style.display = 'none';
+  }
 
-  /* ── Fechar Modal ────────────────────── */
-  window.fecharModal = function (e) {
-    if (e.target === document.getElementById('modal-overlay')) {
-      fecharModalDireto();
-    }
-  };
+  /* Abrir overlay */
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
 
-  window.fecharModalDireto = function () {
-    document.getElementById('modal-overlay').classList.remove('open');
-    document.body.style.overflow = '';
-  };
+/* ── Fechar Modal ao clicar no overlay ── */
+function fecharModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) {
+    fecharModalDireto();
+  }
+}
 
-  document.addEventListener('keydown', function (e) {
+/* ── Fechar Modal direto ─────────────── */
+function fecharModalDireto() {
+  var overlay = document.getElementById('modal-overlay');
+  if (overlay) overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── Mobile menu ────────────────────── */
+var _menuOpen = false;
+
+function toggleMobile() {
+  _menuOpen = !_menuOpen;
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (mobileMenu) mobileMenu.classList.toggle('open', _menuOpen);
+  document.body.style.overflow = _menuOpen ? 'hidden' : '';
+}
+
+function closeMobile() {
+  _menuOpen = false;
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (mobileMenu) mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ══════════════════════════════════════════════
+   INICIALIZAÇÃO — após DOM carregado
+══════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function() {
+
+  /* ── Nav scroll ─────────────────────── */
+  var nav = document.getElementById('navbar');
+  if (nav) {
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+  }
+
+  /* ── Fechar modal com tecla Escape ─── */
+  document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') fecharModalDireto();
   });
 
   /* ── Scroll reveal ──────────────────── */
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
       if (e.isIntersecting) {
-        const delay = parseInt(e.target.dataset.delay || 0);
-        setTimeout(() => e.target.classList.add('visible'), delay);
+        var delay = parseInt(e.target.dataset.delay || 0);
+        setTimeout(function() { e.target.classList.add('visible'); }, delay);
         observer.unobserve(e.target);
       }
     });
   }, { threshold: 0.08 });
 
-  reveals.forEach((el, i) => {
+  reveals.forEach(function(el, i) {
     if (!el.dataset.delay) el.dataset.delay = (i % 4) * 60;
     observer.observe(el);
   });
 
   /* ── Newsletter ─────────────────────── */
-  const newsletterBtn = document.querySelector('.newsletter-btn');
+  var newsletterBtn = document.querySelector('.newsletter-btn');
   if (newsletterBtn) {
-    newsletterBtn.addEventListener('click', function () {
-      const input = document.querySelector('.newsletter-input');
+    newsletterBtn.addEventListener('click', function() {
+      var input = document.querySelector('.newsletter-input');
       if (input && input.value.includes('@')) {
         this.textContent = '✓ Inscrito';
         this.style.background = '#2ecc71';
         input.value = '';
-        setTimeout(() => {
-          this.textContent = 'Inscrever';
-          this.style.background = 'var(--gold)';
+        var btn = this;
+        setTimeout(function() {
+          btn.textContent = 'Inscrever';
+          btn.style.background = 'var(--gold)';
         }, 3200);
       } else if (input) {
         input.style.borderColor = '#e74c3c';
-        setTimeout(() => { input.style.borderColor = 'var(--glass-border)'; }, 2200);
+        setTimeout(function() { input.style.borderColor = 'var(--glass-border)'; }, 2200);
       }
     });
   }
 
   /* ── Drag-to-scroll nas cores ───────── */
-  document.querySelectorAll('.cores-scroll').forEach(el => {
-    let isDown = false, startX, scrollLeft;
-    el.addEventListener('mousedown', e => {
+  document.querySelectorAll('.cores-scroll').forEach(function(el) {
+    var isDown = false, startX, scrollLeft;
+    el.addEventListener('mousedown', function(e) {
       isDown = true; el.classList.add('active');
       startX = e.pageX - el.offsetLeft;
       scrollLeft = el.scrollLeft;
     });
-    el.addEventListener('mouseleave', () => { isDown = false; el.classList.remove('active'); });
-    el.addEventListener('mouseup', () => { isDown = false; el.classList.remove('active'); });
-    el.addEventListener('mousemove', e => {
+    el.addEventListener('mouseleave', function() { isDown = false; el.classList.remove('active'); });
+    el.addEventListener('mouseup', function() { isDown = false; el.classList.remove('active'); });
+    el.addEventListener('mousemove', function(e) {
       if (!isDown) return;
       e.preventDefault();
-      const x = e.pageX - el.offsetLeft;
+      var x = e.pageX - el.offsetLeft;
       el.scrollLeft = scrollLeft - (x - startX) * 1.2;
     });
   });
