@@ -312,6 +312,15 @@ nav.scrolled {
   width: 100%; height: 100%; object-fit: cover;
   transition: transform 0.55s ease, opacity 0.3s ease;
 }
+/* Fix fotos horizontais que saem do card */
+.produto-img-wrap {
+  max-height: 420px;
+}
+#img-sapato-001, #img-orient, #img-technos, #img-linge,
+#img-seculus, #img-oculos-invite,
+#img-berm-tec-001, #img-berm-alfa-001, #img-berm-tec-002 {
+  object-fit: contain !important;
+}
 .produto-card:hover .produto-img-wrap img {
   transform: scale(1.04);
 }
@@ -774,9 +783,9 @@ footer {
         <div class="produtos-grid">
 
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/polo-classic-premium.html'" style="cursor:pointer;">
+            <a href="produto/polo-classic-premium.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/polo-classic-premium.html'" style="cursor:pointer;">
               <img id="img-polo-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="camisa-gola-polo/polo-tecnologica-com-ziper-branca.jpeg" alt="Camisa Polo Classic" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
               <span class="produto-badge">Destaque</span>
             </div>
             <div class="produto-info">
@@ -810,9 +819,9 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="80">
-            <div class="produto-img-wrap" onclick="window.location='produto/polo-slim-fit.html'" style="cursor:pointer;">
+            <a href="produto/polo-slim-fit.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/polo-slim-fit.html'" style="cursor:pointer;">
               <img id="img-polo-002" onclick="abrirModal(this)" style="cursor:zoom-in;" src="camisa-gola-polo/polo-tecnologica-com-ziper-azul-claro.jpeg" alt="Polo Slim" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Polo Slim Fit</p>
@@ -852,9 +861,9 @@ footer {
         <div class="produtos-grid">
 
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/camisa-gola-media-premium.html'" style="cursor:pointer;">
+            <a href="produto/camisa-gola-media-premium.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/camisa-gola-media-premium.html'" style="cursor:pointer;">
               <img id="img-media-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="camiseta-gola-media-premium/camisa-media-premium-branca.jpeg" alt="Camisa Gola Média" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Camisa Gola Média Premium</p>
@@ -913,9 +922,9 @@ footer {
         <div class="produtos-grid">
 
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/colarinho-italiano-classic.html'" style="cursor:pointer;">
+            <a href="produto/colarinho-italiano-classic.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/colarinho-italiano-classic.html'" style="cursor:pointer;">
               <img id="img-italiano-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="camisa-colarinho-italiano/camisa-golarinho-italiano.jpeg" alt="Colarinho Italiano" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
               <span class="produto-badge">Premium</span>
             </div>
             <div class="produto-info">
@@ -956,9 +965,9 @@ footer {
         <div class="produtos-grid">
 
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/basica-gola-tradicional.html'" style="cursor:pointer;">
+            <a href="produto/basica-gola-tradicional.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/basica-gola-tradicional.html'" style="cursor:pointer;">
               <img id="img-trad-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="camisa-gola-polo/polo-tecnologica-com-ziper-branca.jpeg" alt="Básica Tradicional" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Básica Gola Tradicional</p>
@@ -1021,9 +1030,9 @@ footer {
         <div class="produtos-grid">
 
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/t-shirt-essential.html'" style="cursor:pointer;">
+            <a href="produto/t-shirt-essential.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/t-shirt-essential.html'" style="cursor:pointer;">
               <img id="img-tshirtm-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="camiseta-gola-media-premium/camisa-media-premium-preta.jpeg" alt="T-shirt Masculina" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">T-shirt Essential</p>
@@ -1083,9 +1092,9 @@ footer {
         </div>
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/calca-alfaiataria-slim.html'" style="cursor:pointer;">
+            <a href="produto/calca-alfaiataria-slim.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/calca-alfaiataria-slim.html'" style="cursor:pointer;">
               <img id="img-alfa-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calca-de-alfaiataria/calca-alfaiataria-preta.jpeg" alt="Calça Alfaiataria" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
               <span class="produto-badge">Premium</span>
             </div>
             <div class="produto-info">
@@ -1124,9 +1133,9 @@ footer {
         </div>
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/alfaiataria-ajustavel.html'" style="cursor:pointer;">
+            <a href="produto/alfaiataria-ajustavel.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/alfaiataria-ajustavel.html'" style="cursor:pointer;">
               <img id="img-alfareg-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calca-de-alfaiataria-com-regulagem/calca-alfaiataria-slim-preto.jpeg" alt="Alfaiataria Regulagem" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Alfaiataria Ajustável</p>
@@ -1160,9 +1169,9 @@ footer {
         </div>
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/sarja-slim.html'" style="cursor:pointer;">
+            <a href="produto/sarja-slim.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/sarja-slim.html'" style="cursor:pointer;">
               <img id="img-sarja-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calca-sarja/calca-sarja-acetinada-preto.jpeg" alt="Calça Sarja" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Sarja Slim</p>
@@ -1204,9 +1213,9 @@ footer {
         </div>
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/chino-premium.html'" style="cursor:pointer;">
+            <a href="produto/chino-premium.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/chino-premium.html'" style="cursor:pointer;">
               <img id="img-chino-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calca-chino/calca-cropped-chino-camurca.jpeg" alt="Calça Chino" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Chino Premium</p>
@@ -1244,9 +1253,9 @@ footer {
         </div>
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/brim-acetinado-slim.html'" style="cursor:pointer;">
+            <a href="produto/brim-acetinado-slim.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/brim-acetinado-slim.html'" style="cursor:pointer;">
               <img id="img-brim-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calca-bri-m-acetinado-slim/calca-skinny-preta.jpeg" alt="Brim Acetinado" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
               <span class="produto-badge">Slim</span>
             </div>
             <div class="produto-info">
@@ -1285,9 +1294,9 @@ footer {
         </div>
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/jeans-slim-premium.html'" style="cursor:pointer;">
+            <a href="produto/jeans-slim-premium.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/jeans-slim-premium.html'" style="cursor:pointer;">
               <img id="img-jeans-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calca-jeans/calca-jeans-escura.jpeg" alt="Calça Jeans" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Jeans Slim Premium</p>
@@ -1344,9 +1353,9 @@ footer {
         <div class="produtos-grid">
 
           <div class="produto-card reveal" data-delay="160">
-            <div class="produto-img-wrap" onclick="window.location='produto/bermuda-sarja.html'" style="cursor:pointer;">
+            <a href="produto/bermuda-sarja.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" style="max-height:380px;overflow:hidden;" onclick="window.location='produto/bermuda-sarja.html'">
               <img id="img-berm-tec-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="bermudas/bermuda-preta.jpeg" alt="Bermuda Sarja" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Bermuda Sarja</p>
@@ -1383,9 +1392,9 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="240">
-            <div class="produto-img-wrap" onclick="window.location='produto/bermuda-alfaiataria.html'" style="cursor:pointer;">
+            <a href="produto/bermuda-alfaiataria.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" style="max-height:380px;overflow:hidden;" onclick="window.location='produto/bermuda-alfaiataria.html'">
               <img id="img-berm-alfa-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="bermudas/bermuda-alfaiataria-preta.jpeg" alt="Bermuda Alfaiataria" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Bermuda Alfaiataria</p>
@@ -1410,9 +1419,9 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="320">
-            <div class="produto-img-wrap" onclick="window.location='produto/bermuda-tecnologica.html'" style="cursor:pointer;">
+            <a href="produto/bermuda-tecnologica.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" style="max-height:380px;overflow:hidden;" onclick="window.location='produto/bermuda-tecnologica.html'">
               <img id="img-berm-tec-002" onclick="abrirModal(this)" style="cursor:zoom-in;" src="bermudas/bermuda-tecnologica-cinza.jpeg" alt="Bermuda Tecnológica" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
               <span class="produto-badge">Novo</span>
             </div>
             <div class="produto-info">
@@ -1487,9 +1496,9 @@ footer {
 
 
           <div class="produto-card reveal" data-delay="160">
-            <div class="produto-img-wrap" onclick="window.location='produto/sapato-social.html'" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;cursor:pointer;">
+            <a href="produto/sapato-social.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;" onclick="window.location='produto/sapato-social.html'">
               <img id="img-sapato-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="calçados/sapato-preto.jpeg" alt="Sapato Social" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
               <span class="produto-badge">Novo</span>
             </div>
             <div class="produto-info">
@@ -1567,9 +1576,9 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="80">
-            <div class="produto-img-wrap" onclick="window.location='produto/oculos-invite.html'" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;cursor:pointer;">
+            <a href="produto/oculos-invite.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;" onclick="window.location='produto/oculos-invite.html'">
               <img id="img-oculos-invite" onclick="abrirModal(this)" style="cursor:zoom-in;" src="oculos/oculos-invite.jpeg" alt="Óculos Invite" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
               <span class="produto-badge">Novo</span>
             </div>
             <div class="produto-info">
@@ -1817,9 +1826,9 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="80">
-            <div class="produto-img-wrap" onclick="window.location='produto/relogio-orient.html'" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;cursor:pointer;">
+            <a href="produto/relogio-orient.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;" onclick="window.location='produto/relogio-orient.html'">
               <img id="img-orient" onclick="abrirModal(this)" style="cursor:zoom-in;" src="relogios/orient.jpeg" alt="Relógio Orient" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
               <span class="produto-badge">Novo</span>
             </div>
             <div class="produto-info">
@@ -1849,9 +1858,9 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="160">
-            <div class="produto-img-wrap" onclick="window.location='produto/relogio-technos.html'" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;cursor:pointer;">
+            <a href="produto/relogio-technos.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;" onclick="window.location='produto/relogio-technos.html'">
               <img id="img-technos" onclick="abrirModal(this)" style="cursor:zoom-in;" src="relogios/technos.jpeg" alt="Relógio Technos" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Relógio Technos</p>
@@ -1876,9 +1885,9 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="240">
-            <div class="produto-img-wrap" onclick="window.location='produto/relogio-lince.html'" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;cursor:pointer;">
+            <a href="produto/relogio-lince.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;" onclick="window.location='produto/relogio-lince.html'">
               <img id="img-linge" onclick="abrirModal(this)" style="cursor:zoom-in;" src="relogios/linge.jpeg" alt="Relógio Lince" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Relógio Lince</p>
@@ -1899,9 +1908,9 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="320">
-            <div class="produto-img-wrap" onclick="window.location='produto/relogio-seculus.html'" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;cursor:pointer;">
+            <a href="produto/relogio-seculus.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" style="height:280px!important;max-height:280px!important;aspect-ratio:unset!important;overflow:hidden!important;" onclick="window.location='produto/relogio-seculus.html'">
               <img id="img-seculus" onclick="abrirModal(this)" style="cursor:zoom-in;" src="relogios/seculus.jpeg" alt="Relógio Seculus" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Relógio Seculus</p>
@@ -1964,9 +1973,9 @@ footer {
         </div>
         <div class="produtos-grid">
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/baby-look-premium.html'" style="cursor:pointer;">
+            <a href="produto/baby-look-premium.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/baby-look-premium.html'" style="cursor:pointer;">
               <img id="img-feminina-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="t-shirt-feminina-baby-look/camiseta-basica-feminina-branca.jpeg" alt="Camiseta Básica Feminina" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
               <span class="produto-badge">Feminino</span>
             </div>
             <div class="produto-info">
@@ -2032,9 +2041,9 @@ footer {
         <div class="produtos-grid">
 
           <div class="produto-card reveal" data-delay="0">
-            <div class="produto-img-wrap" onclick="window.location='produto/terno-slim-premium.html'" style="cursor:pointer;">
+            <a href="produto/terno-slim-premium.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/terno-slim-premium.html'" style="cursor:pointer;">
               <img id="img-terno-001" onclick="abrirModal(this)" style="cursor:zoom-in;" src="costumes-terno/terno-poliviscose-stretch-preto.jpeg" alt="Terno" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
               <span class="produto-badge">Luxo</span>
             </div>
             <div class="produto-info">
@@ -2068,9 +2077,9 @@ footer {
           </div>
 
           <div class="produto-card reveal" data-delay="80">
-            <div class="produto-img-wrap" onclick="window.location='produto/terno-completo-3-pecas.html'" style="cursor:pointer;">
+            <a href="produto/terno-completo-3-pecas.html" style="display:block;text-decoration:none;cursor:pointer;"><div class="produto-img-wrap" onclick="window.location='produto/terno-completo-3-pecas.html'" style="cursor:pointer;">
               <img id="img-terno-002" onclick="abrirModal(this)" style="cursor:zoom-in;" src="costumes-terno/terno-poliviscose-azul-marinho.jpeg" alt="Terno Completo" onerror="this.src='placeholder.jpeg'">
-            </div>
+            </div></a>
             </div>
             <div class="produto-info">
               <p class="produto-nome">Terno Completo 3 Peças</p>
