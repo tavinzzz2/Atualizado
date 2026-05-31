@@ -40,13 +40,12 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
   overflow-x: hidden;
-  opacity: 0;
-  animation: siteReveal 0.7s 0.1s ease forwards;
+  opacity: 1;
 }
 
 @keyframes siteReveal {
   from { opacity: 0; }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; }
 }
 
 img { display: block; max-width: 100%; }
@@ -2441,6 +2440,12 @@ function closeMobile() {
         el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX) * 1.2;
       });
     });
+  }
+
+  // Mover modal para fora do body para evitar qualquer transform/animation
+  var overlayEl = document.getElementById('modal-overlay');
+  if (overlayEl) {
+    document.documentElement.appendChild(overlayEl);
   }
 
   if (document.readyState === 'loading') {
